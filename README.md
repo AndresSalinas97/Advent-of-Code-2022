@@ -1,3 +1,5 @@
 # Advent of Code 2022
 
 My solutions to [Advent of Code 2022](https://adventofcode.com/2022) using Swift
+
+*(I'm just a beginner)*
