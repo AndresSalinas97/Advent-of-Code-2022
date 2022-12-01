@@ -6,22 +6,8 @@
 
 import Cocoa
 
-let input = """
-1000
-2000
-3000
-
-4000
-
-5000
-6000
-
-7000
-8000
-9000
-
-10000
-"""
+let fileURL = Bundle.main.url(forResource: "sample", withExtension: "txt")
+let input = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
 
 let elfs = input.components(separatedBy: "\n\n")
 var maxCalories = 0
@@ -31,7 +17,7 @@ for elf in elfs {
     var totalCalories = 0
 
     for foodItem in foodItems {
-        totalCalories += Int(foodItem)!
+        totalCalories += Int(foodItem) ?? 0
     }
 
     if totalCalories > maxCalories {
