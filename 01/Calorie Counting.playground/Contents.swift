@@ -6,7 +6,7 @@
 
 import Cocoa
 
-let fileURL = Bundle.main.url(forResource: "sample", withExtension: "txt")
+let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")
 let input = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
 
 let elfs = input.components(separatedBy: "\n\n")
