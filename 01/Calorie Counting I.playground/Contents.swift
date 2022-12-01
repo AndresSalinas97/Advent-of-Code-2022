@@ -1,5 +1,5 @@
 //
-// Advent of Code 2022 - Day 1: Calorie Counting
+// Advent of Code 2022 - Day 1: Calorie Counting - Part One
 //
 //  Created by Andrés Salinas Lima on 01/12/22.
 //
