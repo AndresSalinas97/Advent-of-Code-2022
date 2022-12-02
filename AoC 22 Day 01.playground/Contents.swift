@@ -6,58 +6,52 @@
 
 import Cocoa
 
-let fileURL = Bundle.main.url(forResource: "sample", withExtension: "txt")
+let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")
 let input = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
 
-func partOne(_ input: String) -> Int {
-    let elfs = input.components(separatedBy: "\n\n")
+let elfs = input.components(separatedBy: "\n\n")
+
+// MARK: - PART ONE
+
+func partOne() -> Int {
     var maxCalories = 0
 
     for elf in elfs {
         let foodItems = elf.components(separatedBy: "\n")
-        var totalCalories = 0
+        
+        var elfCalories = 0
+        foodItems.map { elfCalories += Int($0) ?? 0 }
 
-        for foodItem in foodItems {
-            totalCalories += Int(foodItem) ?? 0
-        }
-
-        if totalCalories > maxCalories {
-            maxCalories = totalCalories
-        }
+        maxCalories = max(maxCalories, elfCalories)
     }
 
     return maxCalories
 }
 
-print(partOne(input))
+print("PART ONE: \(partOne())")
 
-func partTwo(_ input: String) -> Int {
-    let elfs = input.components(separatedBy: "\n\n")
-    var maxCalories0 = 0
-    var maxCalories1 = 0
-    var maxCalories2 = 0
+// MARK: - PART TWO
+
+func partTwo() -> Int {
+    var maxCalories = [Int]()
 
     for elf in elfs {
         let foodItems = elf.components(separatedBy: "\n")
-        var totalCalories = 0
+        
+        var elfCalories = 0
+        foodItems.map { elfCalories += Int($0) ?? 0 }
 
-        for foodItem in foodItems {
-            totalCalories += Int(foodItem) ?? 0
-        }
-
-        if totalCalories > maxCalories0 {
-            maxCalories2 = maxCalories1
-            maxCalories1 = maxCalories0
-            maxCalories0 = totalCalories
-        } else if totalCalories > maxCalories1 {
-            maxCalories2 = maxCalories1
-            maxCalories1 = totalCalories
-        } else if totalCalories > maxCalories2 {
-            maxCalories2 = totalCalories
+        if maxCalories.count < 3 {
+            maxCalories.append(elfCalories)
+            maxCalories.sort(by: >)
+        } else if maxCalories.last! < elfCalories {
+            maxCalories.removeLast()
+            maxCalories.append(elfCalories)
+            maxCalories.sort(by: >)
         }
     }
 
-    return maxCalories0 + maxCalories1 + maxCalories2
+    return maxCalories.reduce(0, +)
 }
 
-print(partTwo(input))
+print("PART TWO: \(partTwo())")
