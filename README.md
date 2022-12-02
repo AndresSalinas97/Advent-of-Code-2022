@@ -1,9 +1,9 @@
 # Advent of Code 2022
 
-My solutions to [Advent of Code 2022](https://adventofcode.com/2022) using Swift.
+My solutions to [Advent of Code 2022](https://adventofcode.com/2022) using Swift:
 
-- [x] Day 1: ★★
-- [x] Day 2: ★★
+- [x] [Day 1 (Calorie Counting)](https://adventofcode.com/2022/day/1): ★★ [`solution`](AoC 22 Day 01.playground/Contents.swift)
+- [x] [Day 2 (Rock Paper Scissors)](https://adventofcode.com/2022/day/2): ★★ [`solution`](AoC 22 Day 02.playground/Contents.swift)
 - [ ] Day 3:
 - [ ] Day 4:
 - [ ] Day 5:
