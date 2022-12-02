@@ -41,10 +41,9 @@ func getRoundScore(hisChoice: Shape, myChoice: Shape) -> Int {
 // MARK: - PART ONE
 
 func partOne() -> Int {
-    let hisChoiceDict: Dictionary<Character, Shape> = ["A": .rock, "B": .paper, "C": .scissors]
-    let myChoiceDict: Dictionary<Character, Shape> = ["X": .rock, "Y": .paper, "Z": .scissors]
+    let hisChoiceDict: [Character: Shape] = ["A": .rock, "B": .paper, "C": .scissors]
+    let myChoiceDict: [Character: Shape] = ["X": .rock, "Y": .paper, "Z": .scissors]
 
-    
     var totalScore = 0
 
     for round in rounds {
@@ -65,7 +64,7 @@ print("PART ONE: \(partOne())")
 // MARK: - PART TWO
 
 func partTwo() -> Int {
-    let hisChoiceDict: Dictionary<Character, Shape> = ["A": .rock, "B": .paper, "C": .scissors]
+    let hisChoiceDict: [Character: Shape] = ["A": .rock, "B": .paper, "C": .scissors]
 
     var totalScore = 0
 
