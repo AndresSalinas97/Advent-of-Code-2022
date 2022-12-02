@@ -41,30 +41,18 @@ func getRoundScore(hisChoice: Shape, myChoice: Shape) -> Int {
 // MARK: - PART ONE
 
 func partOne() -> Int {
+    let hisChoiceDict: Dictionary<Character, Shape> = ["A": .rock, "B": .paper, "C": .scissors]
+    let myChoiceDict: Dictionary<Character, Shape> = ["X": .rock, "Y": .paper, "Z": .scissors]
+
+    
     var totalScore = 0
 
     for round in rounds {
-        let hisChoiceChar = round[round.startIndex]
-        let myChoiceChar = round[round.index(before: round.endIndex)]
+        let hisChoiceChar = round.first!
+        let myChoiceChar = round.last!
 
-        let hisChoice: Shape
-        let myChoice: Shape
-
-        if hisChoiceChar == "A" {
-            hisChoice = .rock
-        } else if hisChoiceChar == "B" {
-            hisChoice = .paper
-        } else {
-            hisChoice = .scissors
-        }
-
-        if myChoiceChar == "X" {
-            myChoice = .rock
-        } else if myChoiceChar == "Y" {
-            myChoice = .paper
-        } else {
-            myChoice = .scissors
-        }
+        let hisChoice = hisChoiceDict[hisChoiceChar]!
+        let myChoice = myChoiceDict[myChoiceChar]!
 
         totalScore += getRoundScore(hisChoice: hisChoice, myChoice: myChoice)
     }
@@ -77,22 +65,17 @@ print("PART ONE: \(partOne())")
 // MARK: - PART TWO
 
 func partTwo() -> Int {
+    let hisChoiceDict: Dictionary<Character, Shape> = ["A": .rock, "B": .paper, "C": .scissors]
+
     var totalScore = 0
 
     for round in rounds {
-        let hisChoiceChar = round[round.startIndex]
-        let myStrategyChar = round[round.index(before: round.endIndex)]
+        let hisChoiceChar = round.first!
+        let myStrategyChar = round.last!
 
-        let hisChoice: Shape
+        let hisChoice = hisChoiceDict[hisChoiceChar]!
+
         let myChoice: Shape
-
-        if hisChoiceChar == "A" {
-            hisChoice = .rock
-        } else if hisChoiceChar == "B" {
-            hisChoice = .paper
-        } else {
-            hisChoice = .scissors
-        }
 
         // Lose Strategy
         if myStrategyChar == "X" {
