@@ -18,7 +18,7 @@ func partOne() -> Int {
 
     for elf in elfs {
         let foodItems = elf.components(separatedBy: "\n")
-        
+
         var elfCalories = 0
         foodItems.map { elfCalories += Int($0) ?? 0 }
 
@@ -37,7 +37,7 @@ func partTwo() -> Int {
 
     for elf in elfs {
         let foodItems = elf.components(separatedBy: "\n")
-        
+
         var elfCalories = 0
         foodItems.map { elfCalories += Int($0) ?? 0 }
 
