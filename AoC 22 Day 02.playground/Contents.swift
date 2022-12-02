@@ -10,53 +10,63 @@ let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")
 let input = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
 
 var rounds = input.components(separatedBy: "\n")
-rounds.removeAll { $0.isEmpty }
+while (rounds.last!.isEmpty) {
+    rounds.removeLast() // Removes the empty lines at the end (if any)
+}
 
-func getRoundScore(hisChoice: Character, myChoice: Character) -> Int {
-    var roundScore = 0
+enum Shape: Int {
+    case rock = 1
+    case paper = 2
+    case scissors = 3
+}
 
-    // Shape Score
-    if myChoice == "X" {
-        roundScore += 1
-    } else if myChoice == "Y" {
-        roundScore += 2
-    } else {
-        roundScore += 3
+func getRoundScore(hisChoice: Shape, myChoice: Shape) -> Int {
+    // Draw
+    if hisChoice == myChoice {
+        return 3 + myChoice.rawValue
     }
 
-    // Round Score
-    if hisChoice == "A" {
-        if myChoice == "X" {
-            roundScore += 3
-        } else if myChoice == "Y" {
-            roundScore += 6
-        }
-    } else if hisChoice == "B" {
-        if myChoice == "Y" {
-            roundScore += 3
-        } else if myChoice == "Z" {
-            roundScore += 6
-        }
-    } else {
-        if myChoice == "X" {
-            roundScore += 6
-        } else if myChoice == "Z" {
-            roundScore += 3
-        }
+    // Won
+    if (hisChoice == .rock && myChoice == .paper) ||
+        (hisChoice == .paper && myChoice == .scissors) ||
+        (hisChoice == .scissors && myChoice == .rock)
+    {
+        return 6 + myChoice.rawValue
     }
 
-    return roundScore
+    // Lost
+    return myChoice.rawValue
 }
 
 func partOne() -> Int {
     var totalScore = 0
 
     for round in rounds {
-        let hisChoice = round[round.startIndex]
-        let myChoice = round[round.index(before: round.endIndex)]
+        let hisChoiceString = round[round.startIndex]
+        let myChoiceString = round[round.index(before: round.endIndex)]
+
+        let hisChoice: Shape
+        let myChoice: Shape
+
+        if hisChoiceString == "A" {
+            hisChoice = .rock
+        } else if hisChoiceString == "B" {
+            hisChoice = .paper
+        } else {
+            hisChoice = .scissors
+        }
+
+        if myChoiceString == "X" {
+            myChoice = .rock
+        } else if myChoiceString == "Y" {
+            myChoice = .paper
+        } else {
+            myChoice = .scissors
+        }
 
         totalScore += getRoundScore(hisChoice: hisChoice, myChoice: myChoice)
     }
+
     return totalScore
 }
 
