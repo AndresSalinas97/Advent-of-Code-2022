@@ -2,8 +2,6 @@
 
 My solutions to [Advent of Code 2022](https://adventofcode.com/2022) using Swift
 
-*(I'm just a beginner)*
-
 - [x] Day 1: ★★
 - [x] Day 2: ★★
 - [ ] Day 3: ☆☆
