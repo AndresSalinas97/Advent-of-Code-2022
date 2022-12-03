@@ -1,5 +1,5 @@
 //
-//  Advent of Code 2022 - Day 2: Rock Paper Scissors
+//  Advent of Code 2022 - Day 02: Rock Paper Scissors
 //
 //  Created by Andrés Salinas Lima on 02/12/22
 //
