@@ -1,6 +1,6 @@
 # Advent of Code 2022
 
-My *(beginner level)* solutions to the [Advent of Code 2022](https://adventofcode.com/2022) in Swift:
+My *(beginner level)* solutions to the [Advent of Code 2022](https://adventofcode.com/2022) programming puzzles using Swift:
 
 - [x] [Day 1 (Calorie Counting)](https://adventofcode.com/2022/day/1): ★★ [`solution`](Day-01.playground/Contents.swift)
 - [x] [Day 2 (Rock Paper Scissors)](https://adventofcode.com/2022/day/2): ★★ [`solution`](Day-02.playground/Contents.swift)
