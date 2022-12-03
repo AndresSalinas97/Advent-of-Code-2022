@@ -22,19 +22,51 @@ for char in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" {
     priority += 1
 }
 
-var partOneResult = 0
+// MARK: - PART ONE
 
-for rucksack in rucksacks {
-    let firstCompartment = rucksack.prefix(rucksack.count/2)
-    let secondCompartment = rucksack.suffix(rucksack.count/2)
+func PartOne() -> Int {
+    var result = 0
 
-    for itemType in firstCompartment {
-        if secondCompartment.contains(itemType) {
-            let duplicatedItemType = itemType
-            partOneResult += priorityByType[duplicatedItemType]!
-            break // (exactly one item type per rucksack)
+    for rucksack in rucksacks {
+        let firstCompartment = rucksack.prefix(rucksack.count/2)
+        let secondCompartment = rucksack.suffix(rucksack.count/2)
+
+        for itemType in firstCompartment {
+            if secondCompartment.contains(itemType) {
+                result += priorityByType[itemType]!
+                break
+            }
         }
     }
+
+    return result
 }
 
-print(partOneResult)
+print("PART ONE: \(PartOne())")
+
+// MARK: - PART TWO
+
+func PartTwo() -> Int {
+    var result = 0
+
+    var groupRucksacks = [String]() // Array that will contain the rucksacks of each three-Elf group
+
+    for rucksack in rucksacks {
+        groupRucksacks.append(rucksack)
+
+        if groupRucksacks.count == 3 {
+            for itemType in groupRucksacks[0] {
+                if groupRucksacks[1].contains(itemType), groupRucksacks[2].contains(itemType) {
+                    result += priorityByType[itemType]!
+                    break
+                }
+            }
+
+            groupRucksacks.removeAll()
+        }
+    }
+
+    return result
+}
+
+print("PART TWO: \(PartTwo())")
