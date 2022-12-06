@@ -6,13 +6,8 @@
 
 import Cocoa
 
-let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")
-let input = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
-
-var rounds = input.components(separatedBy: "\n")
-while rounds.last!.isEmpty {
-    rounds.removeLast() // Removes the empty lines at the end (if any)
-}
+let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")!
+let input = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
 
 enum Shape: Int {
     case rock = 1
@@ -46,9 +41,9 @@ func partOne() -> Int {
 
     var totalScore = 0
 
-    for round in rounds {
-        let hisChoiceChar = round.first!
-        let myChoiceChar = round.last!
+    input.enumerateLines { line, _ in
+        let hisChoiceChar = line.first!
+        let myChoiceChar = line.last!
 
         let hisChoice = hisChoiceDict[hisChoiceChar]!
         let myChoice = myChoiceDict[myChoiceChar]!
@@ -68,9 +63,9 @@ func partTwo() -> Int {
 
     var totalScore = 0
 
-    for round in rounds {
-        let hisChoiceChar = round.first!
-        let myStrategyChar = round.last!
+    input.enumerateLines { line, _ in
+        let hisChoiceChar = line.first!
+        let myStrategyChar = line.last!
 
         let hisChoice = hisChoiceDict[hisChoiceChar]!
 

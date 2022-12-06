@@ -6,13 +6,8 @@
 
 import Cocoa
 
-let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")
-let input = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
-
-var rucksacks = input.components(separatedBy: "\n")
-while rucksacks.last!.isEmpty {
-    rucksacks.removeLast() // Removes the empty lines at the end (if any)
-}
+let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")!
+let input = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
 
 // Prepare a dictionary with every item type and its priority value
 var priorityByType = [Character: Int]()
@@ -27,9 +22,9 @@ for char in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" {
 func PartOne() -> Int {
     var result = 0
 
-    for rucksack in rucksacks {
-        let firstCompartment = rucksack.prefix(rucksack.count/2)
-        let secondCompartment = rucksack.suffix(rucksack.count/2)
+    input.enumerateLines { line, _ in
+        let firstCompartment = line.prefix(line.count/2)
+        let secondCompartment = line.suffix(line.count/2)
 
         for itemType in firstCompartment {
             if secondCompartment.contains(itemType) {
@@ -51,8 +46,8 @@ func PartTwo() -> Int {
 
     var groupRucksacks = [String]() // Array that will contain the rucksacks of each three-Elf group
 
-    for rucksack in rucksacks {
-        groupRucksacks.append(rucksack)
+    input.enumerateLines { line, _ in
+        groupRucksacks.append(line)
 
         if groupRucksacks.count == 3 {
             for itemType in groupRucksacks[0] {
