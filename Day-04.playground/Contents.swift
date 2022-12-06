@@ -6,32 +6,23 @@
 
 import Cocoa
 
-let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")
-let input = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
-
-var elfPairs = input.components(separatedBy: "\n")
-while elfPairs.last!.isEmpty {
-    elfPairs.removeLast() // Removes the empty lines at the end (if any)
-}
+let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")!
+let input = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
 
 var resultPartOne = 0
 var resultPartTwo = 0
 
-for elfPair in elfPairs {
-    let assignments = elfPair.components(separatedBy: ",")
+input.enumerateLines { line, _ in
+    let elfRanges = line.components(separatedBy: ",")
+        .map { $0.components(separatedBy: "-") }
+        .map { Int($0[0])! ... Int($0[1])! }
 
-    let elf1Range = assignments[0].components(separatedBy: "-")
-    let elf2Range = assignments[1].components(separatedBy: "-")
-
-    let elf1start = Int(elf1Range[0])!
-    let elf1end = Int(elf1Range[1])!
-    let elf2start = Int(elf2Range[0])!
-    let elf2end = Int(elf2Range[1])!
-
-    if (elf2start >= elf1start && elf2end <= elf1end) || (elf1start >= elf2start && elf1end <= elf2end) {
+    if (elfRanges[0].first! >= elfRanges[1].first! && elfRanges[0].last! <= elfRanges[1].last!) ||
+        (elfRanges[1].first! >= elfRanges[0].first! && elfRanges[1].last! <= elfRanges[0].last!)
+    {
         resultPartOne += 1
         resultPartTwo += 1
-    } else if (elf2start >= elf1start && elf2start <= elf1end) || (elf2end >= elf1start && elf2end <= elf1end) {
+    } else if elfRanges[0].overlaps(elfRanges[1]) {
         resultPartTwo += 1
     }
 }
