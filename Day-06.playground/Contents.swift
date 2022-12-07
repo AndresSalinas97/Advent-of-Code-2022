@@ -9,36 +9,25 @@ import Cocoa
 let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")!
 let input = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
 
-struct MarkerBuffer {
-    private var buffer = [Character]()
-    
-    mutating func receiveCharacter(_ newChar: Character) {
-        buffer.append(newChar)
-        
-        if buffer.count > 4 {
+func findFirstMarker(distinctCharacters: Int) -> Int {
+    var charCount = 0
+    var buffer = [Character]()
+
+    for char in input {
+        buffer.append(char)
+        charCount += 1
+
+        if buffer.count > distinctCharacters {
             buffer.remove(at: 0)
         }
-    }
-    
-    func isMarker() -> Bool {
-        if Set(buffer).count == 4 {
-            return true
+
+        if Set(buffer).count == distinctCharacters {
+            return charCount
         }
-        
-        return false
     }
+
+    return -1 // Not found
 }
 
-var characterCount = 0
-var buffer = MarkerBuffer()
-
-for char in input {
-    buffer.receiveCharacter(char)
-    characterCount += 1
-    
-    if buffer.isMarker() {
-        break
-    }
-}
-
-print("PART ONE: \(characterCount)")
+print("PART ONE: \(findFirstMarker(distinctCharacters: 4))")
+print("PART TWO: \(findFirstMarker(distinctCharacters: 14))")
