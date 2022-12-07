@@ -8,7 +8,3 @@ import Cocoa
 
 let fileURL = Bundle.main.url(forResource: "sample", withExtension: "txt")!
 let input = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
-
-input.enumerateLines { line, _ in
-    <#code#>
-}
