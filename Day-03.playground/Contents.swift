@@ -23,8 +23,8 @@ func PartOne() -> Int {
     var result = 0
 
     input.enumerateLines { line, _ in
-        let firstCompartment = line.prefix(line.count/2)
-        let secondCompartment = line.suffix(line.count/2)
+        let firstCompartment = line.prefix(line.count / 2)
+        let secondCompartment = line.suffix(line.count / 2)
 
         for itemType in firstCompartment {
             if secondCompartment.contains(itemType) {
