@@ -9,33 +9,10 @@ import Cocoa
 let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")!
 let input = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
 
-enum Shape: Int {
-    case rock = 1
-    case paper = 2
-    case scissors = 3
-}
+print("PART ONE: \(partOne(input: input))")
+print("PART TWO: \(partTwo(input: input))")
 
-func getRoundScore(hisChoice: Shape, myChoice: Shape) -> Int {
-    // Draw
-    if hisChoice == myChoice {
-        return 3 + myChoice.rawValue
-    }
-
-    // Won
-    if (hisChoice == .rock && myChoice == .paper) ||
-        (hisChoice == .paper && myChoice == .scissors) ||
-        (hisChoice == .scissors && myChoice == .rock)
-    {
-        return 6 + myChoice.rawValue
-    }
-
-    // Lost
-    return myChoice.rawValue
-}
-
-// MARK: - PART ONE
-
-func partOne() -> Int {
+func partOne(input: String) -> Int {
     let hisChoiceDict: [Character: Shape] = ["A": .rock, "B": .paper, "C": .scissors]
     let myChoiceDict: [Character: Shape] = ["X": .rock, "Y": .paper, "Z": .scissors]
 
@@ -54,11 +31,7 @@ func partOne() -> Int {
     return totalScore
 }
 
-print("PART ONE: \(partOne())")
-
-// MARK: - PART TWO
-
-func partTwo() -> Int {
+func partTwo(input: String) -> Int {
     let hisChoiceDict: [Character: Shape] = ["A": .rock, "B": .paper, "C": .scissors]
 
     var totalScore = 0
@@ -106,4 +79,26 @@ func partTwo() -> Int {
     return totalScore
 }
 
-print("PART TWO: \(partTwo())")
+func getRoundScore(hisChoice: Shape, myChoice: Shape) -> Int {
+    // Draw
+    if hisChoice == myChoice {
+        return 3 + myChoice.rawValue
+    }
+
+    // Won
+    if (hisChoice == .rock && myChoice == .paper) ||
+        (hisChoice == .paper && myChoice == .scissors) ||
+        (hisChoice == .scissors && myChoice == .rock)
+    {
+        return 6 + myChoice.rawValue
+    }
+
+    // Lost
+    return myChoice.rawValue
+}
+
+enum Shape: Int {
+    case rock = 1
+    case paper = 2
+    case scissors = 3
+}

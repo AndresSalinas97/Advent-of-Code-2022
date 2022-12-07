@@ -9,17 +9,11 @@ import Cocoa
 let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")!
 let input = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
 
-// Prepare a dictionary with every item type and its priority value
-var priorityByType = [Character: Int]()
-var priority = 1
-for char in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" {
-    priorityByType.updateValue(priority, forKey: char)
-    priority += 1
-}
+print("PART ONE: \(PartOne(input: input))")
+print("PART TWO: \(PartTwo(input: input))")
 
-// MARK: - PART ONE
-
-func PartOne() -> Int {
+func PartOne(input: String) -> Int {
+    let priorityByType = makePriorityByTypeDictionary()
     var result = 0
 
     input.enumerateLines { line, _ in
@@ -37,11 +31,8 @@ func PartOne() -> Int {
     return result
 }
 
-print("PART ONE: \(PartOne())")
-
-// MARK: - PART TWO
-
-func PartTwo() -> Int {
+func PartTwo(input: String) -> Int {
+    let priorityByType = makePriorityByTypeDictionary()
     var result = 0
 
     var groupRucksacks = [String]() // Array that will contain the rucksacks of each three-Elf group
@@ -64,4 +55,14 @@ func PartTwo() -> Int {
     return result
 }
 
-print("PART TWO: \(PartTwo())")
+func makePriorityByTypeDictionary() -> [Character: Int] {
+    var dict = [Character: Int]()
+
+    var priority = 1
+    for char in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" {
+        dict.updateValue(priority, forKey: char)
+        priority += 1
+    }
+
+    return dict
+}

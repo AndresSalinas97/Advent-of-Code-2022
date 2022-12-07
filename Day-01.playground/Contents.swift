@@ -11,9 +11,10 @@ let input = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
 
 let elfs = input.components(separatedBy: "\n\n")
 
-// MARK: - PART ONE
+print("PART ONE: \(partOne(elfs: elfs))")
+print("PART TWO: \(partTwo(elfs: elfs))")
 
-func partOne() -> Int {
+func partOne(elfs: [String]) -> Int {
     var maxCalories = 0
 
     for elf in elfs {
@@ -28,12 +29,8 @@ func partOne() -> Int {
     return maxCalories
 }
 
-print("PART ONE: \(partOne())")
-
-// MARK: - PART TWO
-
-func partTwo() -> Int {
-    var maxCalories = [Int]()
+func partTwo(elfs: [String]) -> Int {
+    var top3Calories = [Int]()
 
     for elf in elfs {
         let foodItems = elf.components(separatedBy: "\n")
@@ -41,17 +38,15 @@ func partTwo() -> Int {
         var elfCalories = 0
         foodItems.map { elfCalories += Int($0) ?? 0 }
 
-        if maxCalories.count < 3 {
-            maxCalories.append(elfCalories)
-            maxCalories.sort(by: >)
-        } else if maxCalories.last! < elfCalories {
-            maxCalories.removeLast()
-            maxCalories.append(elfCalories)
-            maxCalories.sort(by: >)
+        if top3Calories.count < 3 {
+            top3Calories.append(elfCalories)
+            top3Calories.sort(by: >)
+        } else if top3Calories.last! < elfCalories {
+            top3Calories.removeLast()
+            top3Calories.append(elfCalories)
+            top3Calories.sort(by: >)
         }
     }
 
-    return maxCalories.reduce(0, +)
+    return top3Calories.reduce(0, +)
 }
-
-print("PART TWO: \(partTwo())")

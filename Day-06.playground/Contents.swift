@@ -9,7 +9,10 @@ import Cocoa
 let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")!
 let input = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
 
-func findFirstMarker(distinctCharacters: Int) -> Int {
+print("PART ONE: \(findFirstMarker(input: input, distinctCharacters: 4))")
+print("PART TWO: \(findFirstMarker(input: input, distinctCharacters: 14))")
+
+func findFirstMarker(input: String, distinctCharacters: Int) -> Int {
     var charCount = 0
     var buffer = [Character]()
 
@@ -28,6 +31,3 @@ func findFirstMarker(distinctCharacters: Int) -> Int {
 
     return -1 // Not found
 }
-
-print("PART ONE: \(findFirstMarker(distinctCharacters: 4))")
-print("PART TWO: \(findFirstMarker(distinctCharacters: 14))")

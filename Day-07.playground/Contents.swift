@@ -9,49 +9,36 @@ import Cocoa
 let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")!
 let input = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
 
-struct File {
-    var name: String
-    var size: Int
+var root: Directory = parseFileSystem(from: input)
+
+print("PART ONE: \(partOne(root: root))")
+print("PART TWO: \(partTwo(root: root))")
+
+func partOne(root: Directory) -> Int {
+    var result = 0
+
+    let smallDirectories = getDirectoriesSmallerThan(dir: root, size: 100_000)
+    smallDirectories.map { result += $0.size }
+
+    return result
 }
 
-class Directory {
-    var name: String
-    var files = [File]()
-    var directories = [Directory]()
+func partTwo(root: Directory) -> Int {
+    let totalSpace = 70_000_000
+    let requiredSpaceForUpdate = 30_000_000
+    let usedSpace = root.size
+    let availableSpace = totalSpace - usedSpace
+    let minSpaceToDelete = requiredSpaceForUpdate - availableSpace
 
-    init(name: String) {
-        self.name = name
-    }
+    let optionsToDelete = getDirectoriesBiggerOrEqThan(dir: root, size: minSpaceToDelete)
 
-    var size: Int {
-        var size = 0
+    var result = optionsToDelete[0].size
+    optionsToDelete.map { result = min(result, $0.size) }
 
-        files.map { size += $0.size }
-        directories.map { size += $0.size }
-
-        return size
-    }
-
-    // For debugging purposes
-    func printTree() {
-        func printTree(_ dir: Directory, currentLevel: Int) {
-            var spacer = ""
-            for _ in 0 ..< currentLevel {
-                spacer += "  "
-            }
-
-            print("\(spacer)\(dir.name) (dir, size= \(dir.size))")
-
-            dir.files.map { print("  \(spacer)\($0.name) (file, size= \($0.size))") }
-
-            dir.directories.map { printTree($0, currentLevel: currentLevel + 1) }
-        }
-
-        printTree(self, currentLevel: 0)
-    }
+    return result
 }
 
-func buildFileSystemFromInput() -> Directory {
+func parseFileSystem(from input: String) -> Directory {
     var currentPath = [Directory]()
     currentPath.append(Directory(name: "/"))
 
@@ -105,36 +92,44 @@ func getDirectoriesBiggerOrEqThan(dir: Directory, size: Int) -> [Directory] {
     return resultArray
 }
 
-var root = buildFileSystemFromInput()
+class Directory {
+    var name: String
+    var files = [File]()
+    var directories = [Directory]()
 
-// MARK: - PART ONE
+    init(name: String) {
+        self.name = name
+    }
 
-func partOne() -> Int {
-    var result = 0
+    var size: Int {
+        var size = 0
 
-    let smallDirectories = getDirectoriesSmallerThan(dir: root, size: 100_000)
-    smallDirectories.map { result += $0.size }
+        files.map { size += $0.size }
+        directories.map { size += $0.size }
 
-    return result
+        return size
+    }
+
+    // For debugging purposes
+    func printTree() {
+        func printTree(_ dir: Directory, currentLevel: Int) {
+            var spacer = ""
+            for _ in 0 ..< currentLevel {
+                spacer += "  "
+            }
+
+            print("\(spacer)\(dir.name) (dir, size= \(dir.size))")
+
+            dir.files.map { print("  \(spacer)\($0.name) (file, size= \($0.size))") }
+
+            dir.directories.map { printTree($0, currentLevel: currentLevel + 1) }
+        }
+
+        printTree(self, currentLevel: 0)
+    }
 }
 
-print("PART ONE: \(partOne())")
-
-// MARK: - PART TWO
-
-func partTwo() -> Int {
-    let totalSpace = 70_000_000
-    let requiredSpaceForUpdate = 30_000_000
-    let usedSpace = root.size
-    let availableSpace = totalSpace - usedSpace
-    let minSpaceToDelete = requiredSpaceForUpdate - availableSpace
-
-    let optionsToDelete = getDirectoriesBiggerOrEqThan(dir: root, size: minSpaceToDelete)
-
-    var result = optionsToDelete[0].size
-    optionsToDelete.map { result = min(result, $0.size) }
-
-    return result
+struct File {
+    var name: String
+    var size: Int
 }
-
-print("PART TWO: \(partTwo())")
